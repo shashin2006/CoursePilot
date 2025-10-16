@@ -13,7 +13,7 @@ const app = express();
 const PORT = 3001; // Hardcoded port
 
 // Hardcoded Gemini API Key - REPLACE WITH YOUR ACTUAL API KEY
-const GEMINI_API_KEY = "AIzaSyB6gVn-dn3LwOzePtUjKulD8yJ6QewlKDc"; // ← REPLACE THIS
+const GEMINI_API_KEY = ""; // ← REPLACE THIS
 
 // CORS configuration specifically for your frontend
 app.use(cors({
