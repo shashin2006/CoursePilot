@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume OCR & Analysis | CoursePilot</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@v4.0.2/dist/tesseract.min.js"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+    
+    :root {
+    --header-height: 3rem;
+    
+    --hue-color: 220; 
+    --black-color: hsl(var(--hue-color), 50%, 15%); 
+    --black-color-alt: hsl(var(--hue-color), 50%, 20%);
+    --title-color: hsl(var(--hue-color), 50%, 90%);
+    --text-color: hsl(var(--hue-color), 50%, 70%);
+    --text-color-light: hsl(var(--hue-color), 50%, 60%);
+    --white-color: #FFF;
+    --body-color: hsl(var(--hue-color), 50%, 10%);
+    --container-color: hsl(var(--hue-color), 50%, 12%);
+    --text-gradient: linear-gradient(hsl(var(--hue-color), 50%, 30%), hsl(var(--hue-color), 50%, 15%));
+    --scroll-thumb-color: hsl(var(--hue-color), 50%, 18%);
+    --scroll-thumb-color-alt: hsl(var(--hue-color), 50%, 22%);
+
+      --body-font: 'Poppins', sans-serif;
+      --biggest-font-size: 5rem;
+      --bigger-font-size: 3.5rem;
+      --big-font-size: 2.5rem;
+      --h2-font-size: 1.5rem; 
+      --h3-font-size: 1.25rem;  
+      --normal-font-size: 1.05rem;  
+      --small-font-size: .9rem;  
+      --smaller-font-size: .8rem;  
+      --text-line-height: 2.2rem;  
+     
+      --font-medium: 500;
+      --font-semi-bold: 600;
+     
+      --mb-0-5: .5rem;
+      --mb-0-75: .75rem;
+      --mb-1: 1rem;
+      --mb-1-5: 1.5rem;
+      --mb-2: 2rem;
+      --mb-2-5: 2.5rem;
+    }
+
+    
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;  
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--body-font);
+      font-size: var(--normal-font-size);
+      background-color: var(--body-color);
+      color: var(--text-color);
+      line-height: var(--text-line-height);
+    }
+
+    .header {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: var(--z-fixed);
+      background-color: var(--black-color);
+    }
+
+    .nav {
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .nav__logo-container {
+      display: flex;
+      align-items: center;
+      column-gap: 0.75rem;
+    }
+
+    .nav__logo-text {
+      font-size: var(--h3-font-size);
+      font-weight: var(--font-semi-bold);
+      color: var(--white-color);
+      background: var(--text-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav__menu {
+      display: flex;
+      column-gap: 2rem;
+    }
+
+    .nav__link {
+      font-size: var(--normal-font-size);
+      color: var(--text-color);
+      font-weight: var(--font-medium);
+      transition: color 0.3s;
+    }
+
+    .nav__link:hover {
+      color: var(--white-color);
+    }
+
+    .hero {
+      padding: 7rem 0 2rem;
+      text-align: center;
+    }
+
+    .hero__container {
+      max-width: 968px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero__title {
+      font-size: var(--bigger-font-size);
+      margin-bottom: var(--mb-1);
+      background: var(--text-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero__description {
+      max-width: 800px;
+      margin: 0 auto var(--mb-2);
+      font-size: var(--h3-font-size);
+      line-height: var(--text-line-height);
+    }
+
+    .resume-ocr {
+      padding: 2rem 0 4rem;
+      background-color: var(--body-color);
+      color: var(--text-color);
+    }
+
+    .resume-ocr__container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: var(--container-color);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .resume-ocr__title {
+      font-size: var(--big-font-size);
+      color: var(--title-color);
+      margin-bottom: var(--mb-1);
+      text-align: center;
+      background: var(--text-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .resume-ocr__description {
+      text-align: center;
+      margin-bottom: var(--mb-2);
+      font-size: var(--h3-font-size);
+      line-height: var(--text-line-height);
+    }
+
+    .resume-ocr__input {
+      display: none;
+    }
+
+    .resume-ocr__label {
+      display: block;
+      width: 100%;
+      padding: 1.5rem;
+      background-color: var(--black-color-alt);
+      color: var(--white-color);
+      border-radius: .5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: var(--mb-2);
+      border: 2px dashed var(--text-color-light);
+      font-size: var(--normal-font-size);
+    }
+
+    .resume-ocr__label:hover {
+      background-color: var(--black-color);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .resume-ocr__loading {
+      color: var(--white-color);
+      font-weight: var(--font-semi-bold);
+      display: none;
+      margin-bottom: var(--mb-1);
+      text-align: center;
+      font-size: var(--h3-font-size);
+    }
+
+    .resume-ocr__output {
+      background-color: var(--black-color);
+      padding: 1.5rem;
+      border-radius: .5rem;
+      margin-top: var(--mb-2);
+      max-height: 500px;
+      overflow-y: auto;
+      font-size: var(--normal-font-size);
+    }
+
+    .resume-ocr__extracted-text {
+      white-space: pre-wrap;
+      font-family: var(--body-font);
+      line-height: var(--text-line-height);
+      color: var(--text-color);
+      font-size: var(--normal-font-size);
+    }
+
+    .resume-ocr__response-section {
+      margin-top: var(--mb-1-5);
+    }
+
+    .resume-ocr__response-title {
+      font-size: var(--h2-font-size);
+      color: var(--title-color);
+      margin-bottom: var(--mb-0-75);
+      background: var(--text-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .resume-ocr__response-content {
+      line-height: var(--text-line-height);
+      font-size: var(--normal-font-size);
+    }
+
+    .resume-ocr__error {
+      color: hsl(0, 70%, 60%);
+      font-weight: var(--font-semi-bold);
+      font-size: var(--normal-font-size);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .resume-ocr__loading {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .resume-ocr__file-info {
+      display: block;
+      margin-top: var(--mb-0-5);
+      font-size: var(--small-font-size);
+      color: var(--text-color-light);
+    }
+
+    .resume-ocr__button {
+      display: inline-block;
+      background-color: var(--white-color);
+      color: var(--black-color);
+      padding: 1rem 1.5rem;
+      border-radius: .5rem;
+      font-weight: var(--font-semi-bold);
+      transition: all 0.3s ease;
+      margin-bottom: var(--mb-1);
+      font-size: var(--normal-font-size);
+    }
+
+    .resume-ocr__button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .resume-ocr__skills-list,
+    .resume-ocr__suggestions-list {
+      padding-left: var(--mb-1-5);
+      margin-bottom: var(--mb-1);
+      font-size: var(--normal-font-size);
+    }
+
+    .resume-ocr__skills-list li,
+    .resume-ocr__suggestions-list li {
+      margin-bottom: var(--mb-0-5);
+      position: relative;
+      padding-left: var(--mb-1);
+    }
+
+    .resume-ocr__skills-list li::before,
+    .resume-ocr__suggestions-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--white-color);
+    }
+
+    .resume-ocr__highlight {
+      color: var(--white-color);
+      font-weight: var(--font-semi-bold);
+      background: var(--text-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .feature-description {
+      max-width: 800px;
+      margin: 0 auto var(--mb-2-5);
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .feature-description__title {
+      font-size: var(--h2-font-size);
+      margin-bottom: var(--mb-1);
+      color: var(--title-color);
+    }
+
+    .feature-description__content {
+      line-height: var(--text-line-height);
+      margin-bottom: var(--mb-1);
+      font-size: var(--normal-font-size);
+    }
+
+    .feature-benefits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: var(--mb-1-5);
+    }
+
+    .feature-benefit {
+      background-color: var(--container-color);
+      padding: 1.5rem;
+      border-radius: .5rem;
+      text-align: center;
+    }
+
+    .feature-benefit__icon {
+      font-size: 3rem;
+      margin-bottom: var(--mb-0-75);
+      color: var(--white-color);
+    }
+
+    .feature-benefit__title {
+      font-size: var(--h3-font-size);
+      margin-bottom: var(--mb-0-5);
+      color: var(--title-color);
+    }
+
+    .feature-benefit p {
+      font-size: var(--normal-font-size);
+      line-height: var(--text-line-height);
+    }
+
+    @media screen and (max-width: 340px) {
+      :root {
+        --h2-font-size: 1.3rem;
+        --h3-font-size: 1.1rem;
+        --normal-font-size: 1rem;
+      }
+      
+      .resume-ocr__container {
+        padding: 1.5rem;
+      }
+      
+      .resume-ocr__title {
+        font-size: var(--h2-font-size);
+      }
+
+      .nav {
+        padding: 0 1rem;
+      }
+
+      .hero {
+        padding: 6rem 0 1rem;
+      }
+
+      .feature-benefit__icon {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      :root {
+        --biggest-font-size: 6rem;
+        --bigger-font-size: 4rem;
+        --big-font-size: 3rem;
+        --h2-font-size: 1.7rem;
+        --h3-font-size: 1.4rem;
+        --normal-font-size: 1.1rem;
+      }
+      
+      .resume-ocr__container {
+        padding: 3rem;
+      }
+
+      .hero {
+        padding: 8rem 0 3rem;
+      }
+
+      .hero__title {
+        font-size: var(--biggest-font-size);
+      }
+
+      .feature-benefit__icon {
+        font-size: 4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__container">
+      <h1 class="hero__title">Resume Analysis Tool</h1>
+      <p class="hero__description">
+        Unlock your career potential with our advanced resume analysis technology. 
+        Get personalized career suggestions based on your skills and experience.
+      </p>
+    </div>
+  </section>
+
+  <!-- Feature Description -->
+  <section class="feature-description">
+    <h2 class="feature-description__title">How It Works</h2>
+    <p class="feature-description__content">
+      Our Resume Analyzer uses cutting-edge OCR technology to extract text from your resume 
+      and AI-powered analysis to provide personalized career recommendations. Simply upload 
+      your resume and receive instant feedback on:
+    </p>
+
+    <div class="feature-benefits">
+      <div class="feature-benefit">
+        <div class="feature-benefit__icon">🔍</div>
+        <h3 class="feature-benefit__title">Skill Analysis</h3>
+        <p>Identifies your key skills and suggests improvements</p>
+      </div>
+      <div class="feature-benefit">
+        <div class="feature-benefit__icon">🎯</div>
+        <h3 class="feature-benefit__title">Career Matching</h3>
+        <p>Recommends careers that align with your experience</p>
+      </div>
+      <div class="feature-benefit">
+        <div class="feature-benefit__icon">📈</div>
+        <h3 class="feature-benefit__title">Growth Opportunities</h3>
+        <p>Suggests courses to enhance your marketability</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume OCR Section -->
+  <section class="resume-ocr">
+    <div class="resume-ocr__container">
+      <h1 class="resume-ocr__title">Analyze Your Resume</h1>
+      <p class="resume-ocr__description">Upload an image or PDF of your resume, and we'll extract the text and provide career suggestions.</p>
+      
+      <input type="file" id="resumeInput" class="resume-ocr__input" accept="application/pdf, image/png, image/jpeg" />
+      <label for="resumeInput" class="resume-ocr__label">
+        <span class="resume-ocr__button">Choose File</span>
+        <span class="resume-ocr__file-info">PDF or image (PNG, JPG)</span>
+      </label>
+      
+      <p id="loading" class="resume-ocr__loading">Processing... Please wait.</p>
+      
+      <div id="output" class="resume-ocr__output">
+        <!-- Content will be inserted here by JavaScript -->
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const resumeInput = document.getElementById('resumeInput');
+        const output = document.getElementById('output');
+        const loading = document.getElementById('loading');
+  
+        resumeInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                output.innerHTML = '<p class="resume-ocr__error">No file selected.</p>';
+                return;
+            }
+  
+            loading.style.display = 'block';
+            output.innerHTML = '';
+  
+            const formData = new FormData();
+            formData.append('resume', file);
+  
+            try {
+                const response = await fetch('http://localhost:3001/career-suggestion', {
+                    method: 'POST',
+                    body: formData,
+                });
+  
+                const data = await response.json();
+                console.log("Server Response:", data);
+  
+                loading.style.display = 'none';
+  
+                if (data.success) {
+                    // Display both extracted text and suggestions
+                    let outputHTML = '';
+                    
+                    if (file.type.startsWith('image/')) {
+                        outputHTML += `
+                            <div class="resume-ocr__response-section">
+                                <h3 class="resume-ocr__response-title">Extracted Resume Text</h3>
+                                <pre class="resume-ocr__extracted-text">${data.extractedText || 'No text extracted'}</pre>
+                            </div>
+                        `;
+                    }
+                    
+                    outputHTML += formatResponse(data.suggestion);
+                    output.innerHTML = outputHTML;
+                } else {
+                    output.innerHTML = `<p class="resume-ocr__error">Error: ${data.error || 'Unable to process the file.'}</p>`;
+                }
+            } catch (error) {
+                console.error('Error during upload:', error);
+                loading.style.display = 'none';
+                output.innerHTML = '<p class="resume-ocr__error">Error: Unable to connect to the server. Please try again.</p>';
+            }
+        });
+  
+        function formatResponse(responseText) {
+          if (!responseText) {
+            return '<p class="resume-ocr__error">Error: No response received.</p>';
+          } 
+  
+          // Try to parse bullet points and formatting
+          const formattedText = responseText
+            .replace(/\*\*(.*?)\*\*/g, '<span class="resume-ocr__highlight">$1</span>') // Bold text
+            .replace(/\n/g, '<br>') // Line breaks
+            .replace(/- (.*?)(<br>|$)/g, '<li>$1</li>'); // Bullet points
+  
+          // Check if we found bullet points
+          if (formattedText.includes('<li>')) {
+            return `
+              <div class="resume-ocr__response-section">
+                <h3 class="resume-ocr__response-title">Career Advice</h3>
+                <ul class="resume-ocr__suggestions-list">
+                  ${formattedText.replace(/<li>/g, '').replace(/<\/li>/g, '').split('<br>').filter(item => item.trim()).map(item => `<li>${item}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+          }
+  
+          return `
+            <div class="resume-ocr__response-section">
+              <h3 class="resume-ocr__response-title">Career Advice</h3>
+              <div class="resume-ocr__response-content">${formattedText}</div>
+            </div>
+          `;
+        }
+      });
+  
+      // Test function for the simple endpoint
+      async function testSimpleEndpoint() {
+        try {
+          const response = await fetch("http://localhost:3000/process-file", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+          });
+          const data = await response.json();
+          console.log("Simple endpoint response:", data);
+        } catch (error) {
+          console.error("Error testing simple endpoint:", error);
+        }
+      }
+      
+    </script>
+  </script>
+ 
+</body>
+</html>

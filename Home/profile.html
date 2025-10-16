@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0b0b0b;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .profile-container {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 100px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #6c63ff, #3b3b98);
+      color: #ffffff;
+    }
+
+    .profile-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      margin-right: 20px;
+    }
+
+    .profile-header .profile-info {
+      flex: 1;
+    }
+
+    .profile-header h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .profile-header p {
+      margin: 5px 0;
+    }
+
+    .profile-content {
+      padding: 20px;
+    }
+
+    .profile-content h3 {
+      margin-bottom: 10px;
+      border-bottom: 2px solid #6c63ff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .profile-content .detail {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .edit-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.edit-button i {
+  font-size: 18px;
+}
+
+.edit-button:hover {
+  color: #ccc;
+}
+
+
+    .edit-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    .edit-button:hover {
+      color: #ccc;
+    }
+
+    .stats-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .stat {
+      flex: 1;
+      text-align: center;
+      padding: 15px;
+      margin: 0 10px;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+
+    .stat h4 {
+      margin: 0;
+    }
+
+    .stat p {
+      margin: 5px 0 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <div><h2>Course Pilot</h2></div>
+</div>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <img id="userImage" src="default-image.jpg" alt="User Profile Picture">
+      <div class="profile-info">
+        <h2 id="userName" style="color:white">Full Name: </h2>
+        <p id="userEmail" style="color:white">Email: </p>
+        <p id="usernumber" style="color:white">Phone Number: </p>
+        <p style="color:white">Age: <span id="userAge">0</span></p>
+        <p style="color:white">Bio:</p>
+        <span id="bio" style="padding-left: 30px;">N/A</span>
+      </div>
+      <button class="edit-button"><i class="fa fa-pencil"></i></button>
+
+    </div>
+    <div class="profile-content">
+      <h3>About the Freelancer</h3>
+      <div class="detail">
+        <strong>Profession:</strong> <span id="profession">N/A</span>
+      </div>
+      <div class="detail">
+        <strong>Skills:</strong> <span id="skills">N/A</span>
+      </div>
+      <div class="detail">
+        <strong>Experience Level:</strong> <span id="userExperience">N/A</span>
+      </div>
+      <div class="detail">
+        <strong>Fees:</strong> ₹<span id="userFees">0</span>
+      </div>
+      <div class="detail">
+        <strong>Duration:</strong> <span id="userDuration">0</span> weeks
+      </div>
+      <div class="detail">
+        <strong>Teaching Style:</strong> <span id="userLearningStyle">N/A</span>
+      </div>
+      <div class="detail">
+        <strong>Preferred Language:</strong> <span id="preferredLanguage">N/A</span>
+      </div>
+      <div class="detail">
+        <strong>Link:</strong><span id="portfolio">N/A</span>
+      </div>
+      
+
+      <div class="stats-container">
+        <div class="stat">
+          <h4>Completed</h4>
+          <p>60%</p>
+        </div>
+        <div class="stat">
+          <h4>Rank</h4>
+          <p>#132</p>
+        </div>
+        <div class="stat">
+          <h4>Time Spent</h4>
+          <p>15 hrs/week</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const freelancerData = JSON.parse(localStorage.getItem("freelancerData"));
+
+    if (freelancerData) {
+        // Profile Header Section
+        document.getElementById("userName").textContent = freelancerData.fullName;
+        document.getElementById("userEmail").textContent = freelancerData.email || "N/A";
+        document.getElementById("usernumber").textContent = freelancerData.phone || "N/A";
+        document.getElementById("userAge").textContent = freelancerData.age || "N/A";
+        document.getElementById("bio").textContent = freelancerData.bio || "N/A";
+
+        // Profile Content Section
+        document.getElementById("profession").textContent = freelancerData.fieldOfInterest || "N/A";
+        document.getElementById("skills").textContent = freelancerData.skills || "N/A";
+        document.getElementById("userExperience").textContent = freelancerData.experienceLevel || "N/A";
+        document.getElementById("userFees").textContent = "₹" + freelancerData.costRange || "0";
+        document.getElementById("userDuration").textContent = freelancerData.duration || "0";
+        document.getElementById("userLearningStyle").textContent = freelancerData.learningStyle || "N/A";
+        document.getElementById("portfolio").textContent = freelancerData.socialLinks || "N/A";
+
+        // Display Profile Picture if available
+        if (freelancerData.profilePicture) {
+            document.getElementById("userImage").src = `images/${freelancerData.profilePicture}`;
+        } else {
+            document.getElementById("userImage").src = 'default-profile.png'; // default image if none exists
+        }
+    } else {
+        document.getElementById("profileDetails").innerText = "No freelancer data found.";
+    }
+});
+</script> -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const freelancerData = JSON.parse(localStorage.getItem("freelancerData"));
+
+    if (freelancerData) {
+        // Profile Header Section
+        const userImage = localStorage.getItem("image") || "https://via.placeholder.com/150";
+        document.getElementById("userImage").src = userImage;
+        document.getElementById("userName").textContent = freelancerData.fullName;
+        document.getElementById("userEmail").textContent = freelancerData.email || "N/A";
+        document.getElementById("usernumber").textContent = freelancerData.phone || "N/A";
+        document.getElementById("userAge").textContent = freelancerData.age || "N/A";
+        document.getElementById("bio").textContent = freelancerData.bio || "N/A";
+
+        // Profile Content Section
+        document.getElementById("profession").textContent = freelancerData.fieldOfInterest || "N/A";
+        document.getElementById("skills").textContent = freelancerData.skills || "N/A";
+        document.getElementById("userExperience").textContent = freelancerData.experienceLevel || "N/A";
+        document.getElementById("userFees").textContent = freelancerData.costRange || "0";
+        document.getElementById("userDuration").textContent = freelancerData.duration || "0";
+        document.getElementById("userLearningStyle").textContent = freelancerData.learningStyle || "N/A";
+        document.getElementById("preferredLanguage").textContent = freelancerData.preferredLanguage || "Not Provided";
+        document.getElementById("portfolio").textContent = freelancerData.socialLinks || "N/A";
+
+        // Display Profile Picture if available
+        if (freelancerData.profilePicture) {
+            document.getElementById("userImage").src = `images/${freelancerData.profilePicture}`; // Ensure this path is correct
+        } else {
+            document.getElementById("userImage").src = 'default-profile.png'; // Default image if no profile picture
+        }
+    } else {
+        document.getElementById("profileDetails").innerText = "No freelancer data found.";
+    }
+});
+
+</script>
+</body>
+</html> 
+
+

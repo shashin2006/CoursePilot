@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://github.com/bedimcode/responsive-landing-page-headphones/blob/main/assets/img/favicon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>CoursePilot - Your Learning Journey Starts Here</title>
+    <style>
+        /* Profile Dropdown Styles */
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: var(--container-color);
+            min-width: 200px;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-content.show {
+            display: block;
+            animation: dropdownFade 0.3s ease;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white-color);
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0.25rem 0;
+        }
+
+        /* Profile Page Styles */
+        .profile-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--container-color);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: var(--black-color);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .profile-close:hover {
+            color: var(--white-color);
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-body {
+            padding: 2rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .profile-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--title-color);
+            font-weight: var(--font-medium);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            padding: 1rem;
+            border: 1px solid var(--black-color-alt);
+            border-radius: 0.75rem;
+            background: var(--black-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: var(--font-semi-bold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--black-color-alt);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--black-color);
+            color: var(--white-color);
+        }
+
+        /* Resume Analysis Section */
+        .resume-analysis-section {
+            background: var(--form-container-color);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 2rem 0;
+        }
+
+        .resume-analysis-section h2 {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            margin-bottom: var(--mb-1);
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .resume-analysis-section p {
+            margin-bottom: var(--mb-2);
+            color: var(--text-color-light);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .resume-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .resume-feature {
+            background: var(--black-color);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .resume-feature i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .resume-feature h3 {
+            color: var(--title-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .resume-feature p {
+            color: var(--text-color-light);
+            font-size: 0.9rem;
+        }
+
+        .resume-upload-area {
+            border: 2px dashed var(--accent-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(59, 130, 246, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .resume-upload-area:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-hover);
+        }
+
+        .resume-upload-area i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .resume-upload-text {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .resume-upload-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: var(--font-semi-bold);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .resume-upload-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .resume-input {
+            display: none;
+        }
+
+        /* Resume Analysis Modal */
+        .resume-analysis-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .resume-modal-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--container-color);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .resume-modal-header {
+            background: var(--black-color);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .resume-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .resume-modal-close:hover {
+            color: var(--white-color);
+        }
+
+        .resume-modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .analysis-results {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .analysis-section {
+            background: var(--black-color);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .analysis-section h3 {
+            color: var(--title-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analysis-section h3 i {
+            color: var(--accent-color);
+        }
+
+        .skills-list, .suggestions-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li, .suggestions-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        .skills-list li:last-child, .suggestions-list li:last-child {
+            border-bottom: none;
+        }
+
+        .loading-analysis {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .analysis-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-actions {
+                flex-direction: column;
+            }
+            
+            .profile-container {
+                width: 95%;
+            }
+            
+            .resume-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .resume-analysis-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav__logo-container">
+                <img src="image1.jpg" alt="CoursePilot Logo" class="nav__logo-img">
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link active-link">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#about" class="nav__link">About</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#freelancing" class="nav__link">Free lancing</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="../resume/resume.html" class="nav__link">Resume Analysis</a>
+                    </li>
+                    <li class="nav__item">
+                        <div class="profile-dropdown">
+                            <button class="profile-btn" onclick="toggleDropdown()">
+                                <div class="profile-icon">
+                                    <i class="ri-user-line"></i>
+                                </div>
+                                <span>Profile</span>
+                                <i class="ri-arrow-down-s-line"></i>
+                            </button>
+                            <div class="dropdown-content" id="dropdownContent">
+                                <a href="#" class="dropdown-item" onclick="showProfile()">
+                                    <i class="ri-user-3-line"></i>
+                                    My Profile
+                                </a>
+                                <a href="#" class="dropdown-item" onclick="showResumeAnalysis()">
+                                    <i class="ri-file-search-line"></i>
+                                    Resume Analysis
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="ri-settings-3-line"></i>
+                                    Settings
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="ri-bookmark-line"></i>
+                                    Saved Courses
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" onclick="logout()">
+                                    <i class="ri-logout-box-r-line"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="ri-function-line"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Profile Page Modal -->
+    <div class="profile-page" id="profilePage">
+        <div class="profile-container">
+            <div class="profile-header">
+                <button class="profile-close" onclick="hideProfile()">
+                    <i class="ri-close-line"></i>
+                </button>
+                <div class="profile-avatar">
+                    <i class="ri-user-line"></i>
+                </div>
+                <h2>Student Profile</h2>
+                <p>Complete your personal details</p>
+            </div>
+            <div class="profile-body">
+                <form class="profile-form" id="profileForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth</label>
+                        <input type="date" id="dateOfBirth" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="educationLevel">Education Level</label>
+                        <select id="educationLevel" class="form-control" required>
+                            <option value="">Select education level</option>
+                            <option value="highschool">High School</option>
+                            <option value="undergraduate">Undergraduate</option>
+                            <option value="graduate">Graduate</option>
+                            <option value="postgraduate">Postgraduate</option>
+                            <option value="phd">PhD</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fieldOfStudy">Field of Study</label>
+                        <input type="text" id="fieldOfStudy" class="form-control" placeholder="e.g., Computer Science, Business" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="currentOccupation">Current Occupation</label>
+                        <select id="currentOccupation" class="form-control" required>
+                            <option value="">Select occupation</option>
+                            <option value="student">Student</option>
+                            <option value="employed">Employed</option>
+                            <option value="self-employed">Self-Employed</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="freelancer">Freelancer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="learningGoals">Learning Goals</label>
+                        <textarea id="learningGoals" class="form-control" placeholder="Describe what you want to achieve through our courses..." rows="4"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interests">Areas of Interest</label>
+                        <input type="text" id="interests" class="form-control" placeholder="e.g., Web Development, Data Science, Design" required>
+                    </div>
+                    
+                    <div class="profile-actions">
+                        <button type="button" class="btn btn-secondary" onclick="hideProfile()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume Analysis Modal -->
+    <div class="resume-analysis-modal" id="resumeAnalysisModal">
+        <div class="resume-modal-container">
+            <div class="resume-modal-header">
+                <button class="resume-modal-close" onclick="hideResumeAnalysis()">
+                    <i class="ri-close-line"></i>
+                </button>
+                <h2>Resume Analysis</h2>
+                <p>Get personalized career suggestions based on your resume</p>
+            </div>
+            <div class="resume-modal-body">
+                <div class="resume-upload-area" onclick="document.getElementById('resumeInput').click()">
+                    <i class="ri-file-upload-line"></i>
+                    <div class="resume-upload-text">
+                        <h3>Upload Your Resume</h3>
+                        <p>Click to upload or drag and drop your resume (PDF, DOC, DOCX, JPG, PNG)</p>
+                    </div>
+                    <button class="resume-upload-btn">Choose File</button>
+                    <input type="file" id="resumeInput" class="resume-input" accept=".pdf,.doc,.docx,.jpg,.png" onchange="handleResumeUpload(this.files[0])">
+                </div>
+
+                <div class="loading-analysis" id="loadingAnalysis" style="display: none;">
+                    <div class="analysis-spinner"></div>
+                    <p>Analyzing your resume... This may take a few moments.</p>
+                </div>
+
+                <div class="analysis-results" id="analysisResults" style="display: none;">
+                    <div class="analysis-section">
+                        <h3><i class="ri-star-line"></i> Skills Identified</h3>
+                        <ul class="skills-list" id="skillsList">
+                            <!-- Skills will be populated here -->
+                        </ul>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3><i class="ri-lightbulb-line"></i> Career Suggestions</h3>
+                        <ul class="suggestions-list" id="suggestionsList">
+                            <!-- Suggestions will be populated here -->
+                        </ul>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3><i class="ri-book-line"></i> Recommended Courses</h3>
+                        <ul class="suggestions-list" id="coursesList">
+                            <!-- Courses will be populated here -->
+                        </ul>
+                    </div>
+
+                    <div class="analysis-section">
+                        <h3><i class="ri-trophy-line"></i> Improvement Tips</h3>
+                        <ul class="suggestions-list" id="improvementList">
+                            <!-- Improvement tips will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <section class="home section" id="home">
+            <div class="home__container container grid">
+                <div class="home__img-wrapper">
+                    <img src="image2.jpg" alt="CoursePilot Education" class="home__img">
+                </div>
+
+                <div class="home__data">
+                    <div class="home__header">
+                        <h2 class="home__subtitle">CoursePilot</h2>
+                    </div>
+
+                    <div class="home__footer">
+                        <h3 class="home__title-description">Overview</h3>
+                        <p class="home__description">
+                            Welcome to CoursePilot – your guide to smarter learning. Share your study goals, and we'll match you with the perfect courses to achieve them. Start your journey today!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Analysis Section -->
+        <section class="resume-analysis-section" id="resume-analysis">
+            <h2>AI Resume Analysis</h2>
+            <p>Upload your resume and get instant career guidance, skill analysis, and personalized course recommendations powered by AI.</p>
+            
+            <div class="resume-features">
+                <div class="resume-feature">
+                    <i class="ri-search-eye-line"></i>
+                    <h3>Skill Analysis</h3>
+                    <p>Identify your key skills and areas for improvement</p>
+                </div>
+                <div class="resume-feature">
+                    <i class="ri-road-map-line"></i>
+                    <h3>Career Path</h3>
+                    <p>Discover suitable career paths based on your profile</p>
+                </div>
+                <div class="resume-feature">
+                    <i class="ri-book-open-line"></i>
+                    <h3>Course Matching</h3>
+                    <p>Get personalized course recommendations</p>
+                </div>
+                <div class="resume-feature">
+                    <i class="ri-trending-up-line"></i>
+                    <h3>Growth Tips</h3>
+                    <p>Receive actionable advice for career growth</p>
+                </div>
+            </div>
+
+            <div class="resume-upload-area" onclick="showResumeAnalysis()">
+                <i class="ri-file-search-line"></i>
+                <div class="resume-upload-text">
+                    <h3>Analyze Your Resume Now</h3>
+                    <p>Click here to start your resume analysis and unlock career opportunities</p>
+                </div>
+                <button class="resume-upload-btn">Start Analysis</button>
+            </div>
+        </section>
+
+        <section class="specs section grid" id="about">
+            <h2 class="section__title section__title-gradient">About Us</h2>
+
+            <div class="specs__container container grid">
+                <div class="specs__content">
+                    <p class="specs__description">
+                        CoursePilot simplifies learning by tailoring courses to your unique goals. Whether you're upskilling, exploring new fields, or advancing your career, we provide personalized course recommendations to help you succeed. Let us guide your learning journey!
+                    </p>
+                </div>
+
+                <div class="specs__img-wrapper">
+                    <img src="image3.jpg" alt="About CoursePilot" class="specs__img">
+                </div>
+            </div>
+        </section>
+
+        <section class="case section grid" id="freelancing">
+            <h2 class="section__title section__title-gradient">Freelancing</h2>
+
+            <div class="case__container container grid">
+                <div class="case__img-wrapper">
+                    <img src="WhatsApp Image 2025-03-23 at 22.39.50_6e1df683.jpg" alt="Freelancing" class="case__img">
+                </div>
+
+                <div class="case__data">
+                    <p class="case__description">
+                        Empower your expertise with CoursePilot's Freelancing section. Share your knowledge by creating and publishing your own courses, reaching eager learners worldwide. Turn your skills into opportunities today!
+                    </p>
+                    <a href="../FreeLancer/flogin.html" class="button button--flex button--white">
+                        <i class="ri-arrow-right-line button__icon"></i> Get Started
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="products section" id="popular">
+            <h2 class="section__title section__title-gradient products__line">
+                Popular <br> Courses
+            </h2>
+
+            <div class="products__container container grid">
+                <article class="products__card">
+                    <div class="products__content">
+                        <h3 class="products__title">Python Programming</h3>
+                    </div>
+                </article>
+
+                <article class="products__card">
+                    <div class="products__content">
+                        <h3 class="products__title">Digital Marketing Essentials</h3>
+                    </div>
+                </article>
+
+                <article class="products__card">
+                    <div class="products__content">
+                        <h3 class="products__title">Graphic Design for Beginners</h3>
+                    </div>
+                </article>
+
+                <article class="products__card">
+                    <div class="products__content">
+                        <h3 class="products__title">Web Development Bootcamp</h3>
+                    </div>
+                </article>
+
+                <article class="products__card">
+                    <div class="products__content">
+                        <h3 class="products__title">Personal Finance Mastery</h3>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer section" id="contact">
+        <div class="footer__container container grid">
+            <div class="footer__content">
+                <h3 class="footer__title">Contact Us</h3>
+                <div class="footer__contact-buttons">
+                    <a href="mailto:srivishwaa55@gmail.com" class="footer__button">
+                        <i class="ri-mail-line"></i>
+                        srivishwaa55@gmail.com
+                    </a>
+                    <a href="tel:+918072238377" class="footer__button">
+                        <i class="ri-phone-line"></i>
+                        +91 8072238377
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer__cta">
+            <a href="#" class="footer__cta-button">
+                Start Learning Today
+                <i class="ri-arrow-right-line"></i>
+            </a>
+        </div>
+
+        <p class="footer__copy">
+            <a href="#" class="footer__copy-link">© CoursePilot. All rights reserved</a>
+        </p>
+    </footer>
+
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class="ri-arrow-up-s-line scrollup__icon"></i>
+    </a>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="script.js"></script>
+
+    <script>
+        // Check if user is logged in
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = '../login/login.html';
+        }
+
+        // Profile dropdown functionality
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownContent');
+            dropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdownContent');
+            const profileBtn = document.querySelector('.profile-btn');
+            
+            if (!profileBtn.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Show profile page
+        function showProfile() {
+            document.getElementById('profilePage').style.display = 'block';
+            document.getElementById('dropdownContent').classList.remove('show');
+            loadProfileData();
+        }
+
+        // Hide profile page
+        function hideProfile() {
+            document.getElementById('profilePage').style.display = 'none';
+        }
+
+        // Show resume analysis modal
+        function showResumeAnalysis() {
+            document.getElementById('resumeAnalysisModal').style.display = 'block';
+            document.getElementById('dropdownContent').classList.remove('show');
+        }
+
+        // Hide resume analysis modal
+        function hideResumeAnalysis() {
+            document.getElementById('resumeAnalysisModal').style.display = 'none';
+        }
+
+        // Handle resume upload
+        function handleResumeUpload(file) {
+            if (!file) return;
+
+            const loadingElement = document.getElementById('loadingAnalysis');
+            const resultsElement = document.getElementById('analysisResults');
+            
+            // Show loading
+            loadingElement.style.display = 'block';
+            resultsElement.style.display = 'none';
+
+            // Simulate AI analysis (in real implementation, this would call your backend API)
+            setTimeout(() => {
+                // Hide loading and show results
+                loadingElement.style.display = 'none';
+                resultsElement.style.display = 'block';
+
+                // Generate sample analysis results
+                generateSampleAnalysis();
+            }, 3000);
+        }
+
+        // Generate sample analysis results
+        function generateSampleAnalysis() {
+            const skills = [
+                "JavaScript (Advanced)",
+                "React.js (Intermediate)",
+                "Node.js (Intermediate)",
+                "Python (Beginner)",
+                "HTML/CSS (Advanced)",
+                "Git/GitHub (Intermediate)",
+                "REST APIs (Intermediate)"
+            ];
+
+            const suggestions = [
+                "Full Stack Web Developer",
+                "Frontend Developer",
+                "JavaScript Developer",
+                "React Developer",
+                "UI/UX Developer"
+            ];
+
+            const courses = [
+                "Advanced React Patterns",
+                "Node.js Backend Development",
+                "Python for Web Development",
+                "Database Design & Management",
+                "DevOps Fundamentals"
+            ];
+
+            const improvements = [
+                "Learn TypeScript for better code quality",
+                "Practice algorithm and data structures",
+                "Build more full-stack projects",
+                "Learn testing frameworks (Jest, Cypress)",
+                "Contribute to open-source projects"
+            ];
+
+            // Populate skills list
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = skills.map(skill => `<li>${skill}</li>`).join('');
+
+            // Populate suggestions list
+            const suggestionsList = document.getElementById('suggestionsList');
+            suggestionsList.innerHTML = suggestions.map(suggestion => `<li>${suggestion}</li>`).join('');
+
+            // Populate courses list
+            const coursesList = document.getElementById('coursesList');
+            coursesList.innerHTML = courses.map(course => `<li>${course}</li>`).join('');
+
+            // Populate improvement list
+            const improvementList = document.getElementById('improvementList');
+            improvementList.innerHTML = improvements.map(improvement => `<li>${improvement}</li>`).join('');
+        }
+
+        // Load profile data from localStorage
+        function loadProfileData() {
+            const profileData = JSON.parse(localStorage.getItem('studentProfile') || '{}');
+            
+            document.getElementById('firstName').value = profileData.firstName || '';
+            document.getElementById('lastName').value = profileData.lastName || '';
+            document.getElementById('email').value = profileData.email || localStorage.getItem('userEmail') || '';
+            document.getElementById('phone').value = profileData.phone || '';
+            document.getElementById('dateOfBirth').value = profileData.dateOfBirth || '';
+            document.getElementById('educationLevel').value = profileData.educationLevel || '';
+            document.getElementById('fieldOfStudy').value = profileData.fieldOfStudy || '';
+            document.getElementById('currentOccupation').value = profileData.currentOccupation || '';
+            document.getElementById('learningGoals').value = profileData.learningGoals || '';
+            document.getElementById('interests').value = profileData.interests || '';
+        }
+
+        // Save profile data
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const profileData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                educationLevel: document.getElementById('educationLevel').value,
+                fieldOfStudy: document.getElementById('fieldOfStudy').value,
+                currentOccupation: document.getElementById('currentOccupation').value,
+                learningGoals: document.getElementById('learningGoals').value,
+                interests: document.getElementById('interests').value,
+                lastUpdated: new Date().toISOString()
+            };
+            
+            localStorage.setItem('studentProfile', JSON.stringify(profileData));
+            alert('Profile saved successfully!');
+            hideProfile();
+        });
+
+        // Logout functionality
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userEmail');
+                window.location.href = '../login/login.html';
+            }
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('profilePage').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideProfile();
+            }
+        });
+
+        document.getElementById('resumeAnalysisModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideResumeAnalysis();
+            }
+        });
+
+        // Your existing animation code
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-animate]').forEach(element => {
+            observer.observe(element);
+        });
+
+        window.addEventListener('load', () => {
+            document.querySelectorAll('[data-animate]').forEach(element => {
+                if (isElementInViewport(element)) {
+                    element.classList.add('animate');
+                }
+            });
+        });
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+    </script>
+    <script src="chatbot.js"></script>
+    <link rel="stylesheet" href="chatbot.css">    
+</body>
+</html>

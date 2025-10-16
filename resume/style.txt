@@ -1,0 +1,336 @@
+/* ============================
+   ✅ Global Styles
+============================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ✅ Body Styling */
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: #111827; /* Tailwind's bg-gray-900 */
+  padding-top: 90px; /* Prevent content from being hidden behind the navbar */
+ 
+}
+
+/* ✅ Navbar */
+.nav {
+  /* Keep the navbar fixed at the top */
+  position: fixed;
+  top:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Center items vertically */
+  width: 100%;
+  height: 50px;
+  background-color: #1f2937; /* Tailwind gray-800 */
+  z-index: 1000; /* Ensure the navbar stays on top of other elements */
+  padding: 0 30px; /* Add horizontal padding for better spacing */
+}
+
+.nav h2 {
+  margin: 0; /* Remove default margin from the heading */
+  font-size: 24px; /* Adjust font size for better alignment */
+  cursor: default; /* Default cursor for non-interactive text */
+}
+
+.nav1 {
+  color: #ffffff;
+  padding: 15px; /* Reduce padding to avoid excessive spacing */
+  font-size: 16px; /* Slightly reduce font size for better alignment */
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer; /* Change cursor to pointer for interactive elements */
+}
+
+.nav1:hover {
+  background-color: #ffffff23; /* Highlight on hover */
+}
+
+/* ✅ Page Titles */
+h2 {
+  color: #ffffff;
+  font-size: 30px;
+  margin: 30px 100px;
+}
+
+/* ============================
+ ✅ Form Container
+============================ */
+/* ✅ Ensure the form is fully visible */
+.form-container {
+  width: 80%; /* Increase width for better visibility */
+  max-width: 600px; /* Adjust max width */
+  min-width: 320px; /* Prevent it from being too small */
+  max-height: 90vh; /* Ensure it fits within the viewport */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* ✅ Ensure body does not crop content */
+body {
+  height: auto; /* Allow content to determine height */
+  min-height: 100vh; /* Ensure it takes at least full height */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* ✅ Fix issues with navbar and form positioning */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+
+/* ✅ Ensure the form is centered properly */
+.form-container {
+  margin-top: 60px; /* Prevent overlap with navbar */
+}
+
+/* ✅ Responsive Adjustments */
+@media (max-width: 768px) {
+  .form-container {
+      width: 90%; /* More width on smaller screens */
+      padding: 20px; /* Reduce padding for smaller screens */
+  }
+}
+
+
+/* ✅ Form Inputs */
+form label {
+  display: block;
+  margin-top: 10px;
+  color: #9ca3af; /* Tailwind gray-400 */
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #374151; /* Tailwind gray-700 */
+  color: white;
+  font-size: 1rem;
+}
+
+form input:focus {
+  outline: none;
+  border: 2px solid #3b82f6; /* Tailwind blue-500 */
+}
+
+/* ✅ Remember Me & Forgot Password */
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.remember-forgot a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.remember-forgot a:hover {
+  text-decoration: underline;
+}
+
+/* ✅ Submit Button */
+button {
+  display: block;
+  width: 100%;
+  background-color: #2563eb; /* Tailwind blue-600 */
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border: none;
+}
+
+button:hover {
+  background-color: #3b82f6;
+}
+
+/* ✅ Text & Links */
+p {
+  font-size: 14px;
+  color: #9ca3af; /* Tailwind gray-400 */
+  text-align: center;
+}
+
+p span {
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+p span:hover {
+  text-decoration: underline;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  form input,
+  form select,
+  form textarea {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoursePilot - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-cover bg-center bg-fixed bg-no-repeat text-white flex flex-col items-center justify-center " 
+      style="background-image: url('../images/loginback.jpg');">
+
+    <!-- Navbar -->
+    <header class="w-full bg-gray-800 p-4 flex items-center justify-between px-10">
+        <div class="flex items-center gap-3">
+            <img src="../images/logos.jpg" alt="CoursePilot Logo" class="h-12 w-12">
+            <h1 class="text-xl font-bold">CoursePilot</h1>
+        </div>
+        <nav class="flex space-x-8">
+            <a href="../Home/home.html" class="hover:text-blue-400">Home</a>
+            <a href="../Home/home.html" class="hover:text-blue-400">About Us</a>
+            <a href="#tutor" class="hover:text-blue-400">Tutor</a>
+            <a href="#pro" class="hover:text-blue-400">ProGrow</a>
+        </nav>
+        
+    </header>
+
+    <!-- Login & Signup Form -->
+    <div class="w-96 bg-gray-800 p-8 rounded-lg shadow-lg mt-10">
+        <!-- Login Form -->
+        <form id="loginForm">
+            <h2 class="text-2xl font-semibold text-center mb-6">Login</h2>
+            <label class="block text-sm font-medium">E-mail</label>
+            <input type="email" id="loginEmail" class="w-full p-3 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 mb-4" required>
+
+            <label class="block text-sm font-medium">Password</label>
+            <input type="password" id="loginPassword" class="w-full p-3 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 mb-4" required>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 transition p-3 rounded-lg font-bold">LOG IN</button>
+            
+            <p class="text-sm text-gray-400 mt-4 text-center">New User? <span id="switchToSignup" class="text-blue-400 cursor-pointer hover:underline">Sign Up</span></p>
+        </form>
+
+        <!-- Signup Form (Hidden Initially) -->
+        <form id="signupForm" class="hidden">
+            <h2 class="text-2xl font-semibold text-center mb-6">Sign Up</h2>
+            <label class="block text-sm font-medium">Name</label>
+            <input type="text" id="signupName" class="w-full p-3 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 mb-4" required>
+
+
+            <label class="block text-sm font-medium">E-mail</label>
+            <input type="email" id="signupEmail" class="w-full p-3 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 mb-4" required>
+
+            <label class="block text-sm font-medium">Password</label>
+            <input type="password" id="signupPassword" class="w-full p-3 rounded-lg bg-gray-700 text-white focus:ring-2 focus:ring-blue-500 mb-4" required>
+
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 transition p-3 rounded-lg font-bold">SIGN UP</button>
+            
+            <p class="text-sm text-gray-400 mt-4 text-center">Existing User? <span id="switchToLogin" class="text-blue-400 cursor-pointer hover:underline">Log In</span></p>
+        </form>
+    </div>
+    <!-- Remember Me & Forgot Password -->
+    <div class="flex justify-between items-center mb-4">
+    <label class="flex items-center">
+        <input type="checkbox" id="rememberMe" class="mr-2">
+            Remember Me&nbsp;&nbsp;
+    </label>
+    <a href="#" class="text-blue-400 hover:underline">Forgot Password?</a>
+    </div>
+
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const switchToSignup = document.getElementById("switchToSignup");
+        const switchToLogin = document.getElementById("switchToLogin");
+
+        switchToSignup.addEventListener("click", () => {
+            loginForm.classList.add("hidden");
+            signupForm.classList.remove("hidden");
+        });
+
+        switchToLogin.addEventListener("click", () => {
+            signupForm.classList.add("hidden");
+            loginForm.classList.remove("hidden");
+        });
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            fetch("http://localhost:5001/login", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mail: email, password: password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.pass === password) {
+                    alert("Logged in successfully");
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.msg);
+                }
+            });
+        });
+
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.getElementById("signupName").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+
+            fetch("http://localhost:5001/signup", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, mail: email, password: password })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.msg);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+mogoni thogo juku therai re pilla-1432
+Moga thoga jukku oppairas-143

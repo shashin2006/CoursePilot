@@ -1,0 +1,168 @@
+/* ============================
+   ✅ Global Styles
+============================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background: url('tech.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* ✅ Blurred Background Effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+/* ============================
+   ✅ Navbar Styles
+============================ */
+.nav {
+  width: 100%;
+  background-color: #1f2937;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  height: 80px;
+}
+
+.nav h2 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+.nav1 {
+  color: #ffffff;
+  padding: 12px 30px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.nav1:hover {
+  background-color: #374151;
+  color: #60a5fa;
+}
+
+/* ============================
+   ✅ Login & Signup Box
+============================ */
+.logNsgup {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  padding-top: 80px; /* Account for fixed navbar */
+}
+
+.form {
+  width: 384px;
+  background-color: #1f2937;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ Form Inputs */
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #374151;
+  color: white;
+  border: none;
+  margin: 8px 0 16px 0;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid #3b82f6;
+}
+
+label {
+  display: block;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  margin-top: 8px;
+}
+
+/* ✅ Buttons */
+.button {
+  width: 100%;
+  background-color: #2563eb;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin: 16px 0;
+}
+
+.button:hover {
+  background-color: #3b82f6;
+}
+
+/* ✅ Text & Links */
+.signup, .ulogin {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.signup div, .ulogin div {
+  color: #60a5fa;
+  cursor: pointer;
+}
+
+.signup div:hover, .ulogin div:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .nav {
+    padding: 16px 20px;
+  }
+  
+  .nav h2 {
+    font-size: 1.25rem;
+  }
+  
+  .nav1 {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+  }
+  
+  .form {
+    width: 90%;
+    padding: 24px;
+  }
+}
