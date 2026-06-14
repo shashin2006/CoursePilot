@@ -6,6 +6,8 @@
     <link rel="shortcut icon" href="https://github.com/bedimcode/responsive-landing-page-headphones/blob/main/assets/img/favicon.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
     <title>CoursePilot - Your Learning Journey Starts Here</title>
     <style>
         /* Profile Dropdown Styles */
@@ -495,6 +497,35 @@
                 padding: 1.5rem;
             }
         }
+        .ai-response-body {
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+        .ai-response-body h1,
+        .ai-response-body h2,
+        .ai-response-body h3 {
+            color: var(--title-color);
+            margin: 1.2rem 0 0.5rem;
+        }
+        .ai-response-body strong {
+            color: var(--white-color);
+        }
+        .ai-response-body ul,
+        .ai-response-body ol {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+        .ai-response-body li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .ai-response-body li:last-child {
+            border-bottom: none;
+        }
+        .ai-response-body p {
+            margin: 0.6rem 0;
+        }
+    
     </style>
 </head>
 <body>
@@ -929,79 +960,51 @@
         }
 
         // Handle resume upload
-        function handleResumeUpload(file) {
-            if (!file) return;
+        async function handleResumeUpload(file) {
+    if (!file) return;
 
-            const loadingElement = document.getElementById('loadingAnalysis');
-            const resultsElement = document.getElementById('analysisResults');
-            
-            // Show loading
-            loadingElement.style.display = 'block';
-            resultsElement.style.display = 'none';
+    const loadingElement = document.getElementById('loadingAnalysis');
+    const resultsElement = document.getElementById('analysisResults');
 
-            // Simulate AI analysis (in real implementation, this would call your backend API)
-            setTimeout(() => {
-                // Hide loading and show results
-                loadingElement.style.display = 'none';
-                resultsElement.style.display = 'block';
+    loadingElement.style.display = 'block';
+    resultsElement.style.display = 'none';
 
-                // Generate sample analysis results
-                generateSampleAnalysis();
-            }, 3000);
+    try {
+        const formData = new FormData();
+        formData.append('resume', file);
+
+        const response = await fetch('http://localhost:3001/career-suggestion', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(data.error || 'Analysis failed');
         }
 
+        loadingElement.style.display = 'none';
+        resultsElement.style.display = 'block';
+
+        displayAnalysisResults(data.suggestion);
+
+    } catch (error) {
+        loadingElement.style.display = 'none';
+        alert('Error analyzing resume: ' + error.message);
+    }
+}
         // Generate sample analysis results
-        function generateSampleAnalysis() {
-            const skills = [
-                "JavaScript (Advanced)",
-                "React.js (Intermediate)",
-                "Node.js (Intermediate)",
-                "Python (Beginner)",
-                "HTML/CSS (Advanced)",
-                "Git/GitHub (Intermediate)",
-                "REST APIs (Intermediate)"
-            ];
-
-            const suggestions = [
-                "Full Stack Web Developer",
-                "Frontend Developer",
-                "JavaScript Developer",
-                "React Developer",
-                "UI/UX Developer"
-            ];
-
-            const courses = [
-                "Advanced React Patterns",
-                "Node.js Backend Development",
-                "Python for Web Development",
-                "Database Design & Management",
-                "DevOps Fundamentals"
-            ];
-
-            const improvements = [
-                "Learn TypeScript for better code quality",
-                "Practice algorithm and data structures",
-                "Build more full-stack projects",
-                "Learn testing frameworks (Jest, Cypress)",
-                "Contribute to open-source projects"
-            ];
-
-            // Populate skills list
-            const skillsList = document.getElementById('skillsList');
-            skillsList.innerHTML = skills.map(skill => `<li>${skill}</li>`).join('');
-
-            // Populate suggestions list
-            const suggestionsList = document.getElementById('suggestionsList');
-            suggestionsList.innerHTML = suggestions.map(suggestion => `<li>${suggestion}</li>`).join('');
-
-            // Populate courses list
-            const coursesList = document.getElementById('coursesList');
-            coursesList.innerHTML = courses.map(course => `<li>${course}</li>`).join('');
-
-            // Populate improvement list
-            const improvementList = document.getElementById('improvementList');
-            improvementList.innerHTML = improvements.map(improvement => `<li>${improvement}</li>`).join('');
-        }
+        function displayAnalysisResults(markdownText) {
+    const resultsContainer = document.getElementById('analysisResults');
+    resultsContainer.innerHTML = `
+        <div class="analysis-section">
+            <h3><i class="ri-robot-line"></i> AI Career Analysis</h3>
+            <div class="ai-response-body" id="aiResponseBody"></div>
+        </div>
+    `;
+    document.getElementById('aiResponseBody').innerHTML = marked.parse(markdownText);
+}
 
         // Load profile data from localStorage
         function loadProfileData() {

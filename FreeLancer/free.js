@@ -73,7 +73,7 @@ const say=()=>{
         lang: document.getElementById("preferredLanguage").value,
         bio: document.getElementById("target").value
     }
-    fetch("http://localhost:5001/fdetails",{
+    fetch("http://localhost:3001/fdetails",{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
